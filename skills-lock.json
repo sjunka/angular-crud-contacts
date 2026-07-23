@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "skills": {
+    "accessibility": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/accessibility/SKILL.md",
+      "computedHash": "0a494577c9861b2511fe0ac66c1ccce624a73f4b0a82e875389accf0573a9f47"
+    },
+    "angular-component": {
+      "source": "analogjs/angular-skills",
+      "sourceType": "github",
+      "skillPath": "skills/angular-component/SKILL.md",
+      "computedHash": "2789fdf11e2a70832ce2e6e79954018325a010ebdd45c5d4b1e7bfdf44679b7c"
+    },
+    "breakdown-feature-prd": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "skillPath": "skills/breakdown-feature-prd/SKILL.md",
+      "computedHash": "e0a851ff26f6ddc213c390556ede39ac8fa43b76076b4a187c8c759128fe9fce"
+    },
+    "design-system-tokens": {
+      "source": "yonatangross/orchestkit",
+      "sourceType": "github",
+      "skillPath": "plugins/ork/skills/design-system-tokens/SKILL.md",
+      "computedHash": "47b18d9f6f033832ef05cad420547dc7f3f811f4e8a81d073e9b1c750534d6d0"
+    },
+    "emilkowal-animations": {
+      "source": "pproenca/dot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/.experimental/emilkowal-animations/SKILL.md",
+      "computedHash": "f9d5fc89ddc9b7b1ce1b323c7152881c3a01d8088ccec5ddfd4c7aebc0c9c936"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "4eabc66183767153e404b39d1b839b1c37f2d82d86f0a0d7e880a579d8d62336"
+    },
+    "grill-me": {
+      "source": "akillness/oh-my-skills",
+      "sourceType": "github",
+      "skillPath": ".agent-skills/grill-me/SKILL.md",
+      "computedHash": "6027b69c4c2878039ae5f3fae4cde4f6f30d2ff3212fda6df5248ff56ad4871d"
+    },
+    "gsap-scrolltrigger": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-scrolltrigger/SKILL.md",
+      "computedHash": "1cdc5647693783cb7a662d84a5de434c88a051ed56b4d33597c9b5782b5973e6"
+    },
+    "impeccable-design-polish": {
+      "source": "nexu-io/open-design",
+      "sourceType": "github",
+      "skillPath": "skills/impeccable-design-polish/SKILL.md",
+      "computedHash": "4e503449a58d0609daba362aea73aebf920b532a9793446158cc8a907e821b78"
+    },
+    "react-component-architecture": {
+      "source": "aj-geddes/useful-ai-prompts",
+      "sourceType": "github",
+      "skillPath": "skills/react-component-architecture/SKILL.md",
+      "computedHash": "c78ca528a8262531a91d8af8fb88a4f5944d8e6afe63c8b2cd701bcda8c34e7d"
+    }
+  }
+}

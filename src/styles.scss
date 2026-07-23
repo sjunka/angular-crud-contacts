@@ -1,0 +1,84 @@
+/* Nike design tokens (from DESIGN.md) → CSS custom properties.
+   Font substitute per DESIGN.md: Helvetica Now → Helvetica Neue/Arial. */
+:root {
+  --ink: #111111;
+  --on-primary: #ffffff;
+  --canvas: #ffffff;
+  --soft-cloud: #f5f5f5;
+  --charcoal: #39393b;
+  --mute: #707072;
+  --stone: #9e9ea0;
+  --hairline: #cacacb;
+  --hairline-soft: #e5e5e5;
+  --sale: #d30005;
+  --success: #007d48;
+  --info: #1151ff;
+
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 12px;
+  --sp-lg: 18px;
+  --sp-xl: 24px;
+  --sp-xxl: 30px;
+  --sp-section: 48px;
+
+  --r-md: 24px;
+  --r-lg: 30px;
+  --r-full: 9999px;
+
+  --font-ui: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background: var(--canvas);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-weight: 500; line-height: 1.2; margin: 0; }
+a { color: inherit; }
+
+/* Shared Nike primitives ------------------------------------------------ */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-sm);
+  height: 48px;
+  padding: 0 32px;
+  border: 0;
+  border-radius: var(--r-lg);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 120ms ease, opacity 120ms ease, background 120ms ease;
+}
+.pill:active { transform: scale(0.97); opacity: 0.85; } /* Nike tap-collapse */
+.pill:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.pill--primary { background: var(--ink); color: var(--on-primary); }
+.pill--secondary { background: var(--soft-cloud); color: var(--ink); }
+.pill--danger { background: var(--sale); color: var(--on-primary); }
+.pill--sm { height: 40px; padding: 0 16px; font-size: 14px; }
+.pill:disabled { opacity: 0.4; cursor: not-allowed; }
+.pill:disabled:active { transform: none; }
+
+.field {
+  background: var(--soft-cloud);
+  border: 2px solid transparent;
+  border-radius: var(--r-md);
+  height: 48px;
+  padding: 0 16px;
+  font: inherit;
+  width: 100%;
+  color: var(--ink);
+}
+.field:focus { outline: none; background: var(--canvas); border-color: var(--ink); }
+.field--invalid { border-color: var(--sale); }
