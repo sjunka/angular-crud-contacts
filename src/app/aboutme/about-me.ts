@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Button } from '../components/button';
 
 @Component({
   selector: 'app-about-me',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [Button],
   template: `
     <article class="wrap">
       <header class="hero">
@@ -131,7 +131,7 @@ import { RouterLink } from '@angular/router';
       </section>
 
       <footer class="foot">
-        <a class="pill pill--primary" routerLink="/customers">Back to the app</a>
+        <app-button link="/customers">Back to the app</app-button>
       </footer>
     </article>
   `,
