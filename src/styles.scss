@@ -44,31 +44,9 @@ html, body {
 h1, h2, h3 { font-weight: 500; line-height: 1.2; margin: 0; }
 a { color: inherit; }
 
-/* Shared Nike primitives ------------------------------------------------ */
-
-.pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-sm);
-  height: 48px;
-  padding: 0 32px;
-  border: 0;
-  border-radius: var(--r-lg);
-  font: inherit;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 120ms ease, opacity 120ms ease, background 120ms ease;
-}
-.pill:active { transform: scale(0.97); opacity: 0.85; } /* Nike tap-collapse */
-.pill:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-.pill--primary { background: var(--ink); color: var(--on-primary); }
-.pill--secondary { background: var(--soft-cloud); color: var(--ink); }
-.pill--danger { background: var(--sale); color: var(--on-primary); }
-.pill--sm { height: 40px; padding: 0 16px; font-size: 14px; }
-.pill:disabled { opacity: 0.4; cursor: not-allowed; }
-.pill:disabled:active { transform: none; }
+/* Pill button lives in components/button.ts; text input in components/text-field.ts.
+   The .field rule below stays global because the list's <select> and search <input>
+   reuse it outside those components. */
 
 .field {
   background: var(--soft-cloud);
@@ -81,4 +59,3 @@ a { color: inherit; }
   color: var(--ink);
 }
 .field:focus { outline: none; background: var(--canvas); border-color: var(--ink); }
-.field--invalid { border-color: var(--sale); }

@@ -1,19 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { CustomerStore } from '../customer-store';
 import { Customer } from '../customer';
+import { Button } from '../components/button';
+import { StatusBadge } from '../components/status-badge';
 
 @Component({
   selector: 'app-customer-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [Button, StatusBadge],
   template: `
     <header class="head">
       <div>
         <h1>CUSTOMERS</h1>
         <p class="sub">{{ store.count() }} total · {{ store.activeCount() }} active</p>
       </div>
-      <a class="pill pill--primary" routerLink="/customers/new">Add customer</a>
+      <app-button link="/customers/new">Add customer</app-button>
     </header>
 
     <div class="controls">
@@ -45,15 +46,15 @@ import { Customer } from '../customer';
       <ul class="grid">
         @for (c of store.paged(); track c.id) {
           <li class="card">
-            <span class="status" [class.status--off]="c.status === 'inactive'">{{ c.status }}</span>
+            <app-status-badge [status]="c.status" />
             <h2 class="name">{{ c.firstName }} {{ c.lastName }}</h2>
             <p class="meta">{{ c.email }}</p>
             <p class="meta">{{ c.phone }}</p>
             <div class="actions">
-              <a class="pill pill--secondary pill--sm" [routerLink]="['/customers', c.id, 'edit']">Edit</a>
-              <button class="pill pill--danger pill--sm" (click)="confirmDelete(c)" [disabled]="store.loading()">
+              <app-button variant="secondary" size="sm" [link]="['/customers', c.id, 'edit']">Edit</app-button>
+              <app-button variant="danger" size="sm" [disabled]="store.loading()" (clicked)="confirmDelete(c)">
                 Delete
-              </button>
+              </app-button>
             </div>
           </li>
         }
@@ -61,13 +62,13 @@ import { Customer } from '../customer';
 
       @if (store.pageCount() > 1) {
         <nav class="pager" aria-label="Pagination">
-          <button class="pill pill--secondary pill--sm" [disabled]="store.page() <= 1" (click)="store.page.set(store.page() - 1)">
+          <app-button variant="secondary" size="sm" [disabled]="store.page() <= 1" (clicked)="store.page.set(store.page() - 1)">
             Prev
-          </button>
+          </app-button>
           <span class="pageno">{{ store.page() }} / {{ store.pageCount() }}</span>
-          <button class="pill pill--secondary pill--sm" [disabled]="store.page() >= store.pageCount()" (click)="store.page.set(store.page() + 1)">
+          <app-button variant="secondary" size="sm" [disabled]="store.page() >= store.pageCount()" (clicked)="store.page.set(store.page() + 1)">
             Next
-          </button>
+          </app-button>
         </nav>
       }
     }
@@ -88,9 +89,7 @@ import { Customer } from '../customer';
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
     .card { background: var(--soft-cloud); padding: var(--sp-xl); display: flex; flex-direction: column; gap: var(--sp-xs);
       animation: rise 240ms ease both; }
-    .status { align-self: flex-start; font-size: 12px; font-weight: 500; text-transform: uppercase;
-      color: var(--success); letter-spacing: 0.5px; }
-    .status--off { color: var(--stone); }
+    app-status-badge { align-self: flex-start; }
     .name { font-size: 20px; margin-top: var(--sp-xs); }
     .meta { color: var(--mute); margin: 0; font-size: 14px; }
     .actions { display: flex; gap: var(--sp-sm); margin-top: var(--sp-md); }

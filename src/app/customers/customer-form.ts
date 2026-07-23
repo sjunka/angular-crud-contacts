@@ -1,26 +1,25 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerStore } from '../customer-store';
+import { Button } from '../components/button';
+import { TextField } from '../components/text-field';
 
 @Component({
   selector: 'app-customer-form',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, Button, TextField],
   template: `
     <div class="wrap">
       <h1>{{ editId ? 'EDIT CUSTOMER' : 'NEW CUSTOMER' }}</h1>
 
       <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="row">
-          @for (f of textFields; track f.key) {
-            <label class="group">
-              <span class="label">{{ f.label }}</span>
-              <input class="field" [class.field--invalid]="invalid(f.key)" [type]="f.type" [formControlName]="f.key" />
-              @if (invalid(f.key)) { <span class="err">{{ errorFor(f.key) }}</span> }
-            </label>
-          }
-          <label class="group">
+          <app-text-field [control]="ctrl('firstName')" label="First name" />
+          <app-text-field [control]="ctrl('lastName')" label="Last name" />
+          <app-text-field [control]="ctrl('email')" label="Email" type="email" class="full" />
+          <app-text-field [control]="ctrl('phone')" label="Phone" type="tel" class="full" />
+          <label class="group full">
             <span class="label">Status</span>
             <select class="field" formControlName="status">
               <option value="active">Active</option>
@@ -32,10 +31,10 @@ import { CustomerStore } from '../customer-store';
         @if (serverError()) { <p class="server-err">{{ serverError() }}</p> }
 
         <div class="actions">
-          <button class="pill pill--primary" type="submit" [disabled]="store.loading()">
+          <app-button type="submit" [disabled]="store.loading()">
             {{ store.loading() ? 'Saving…' : 'Save' }}
-          </button>
-          <a class="pill pill--secondary" routerLink="/customers">Cancel</a>
+          </app-button>
+          <app-button variant="secondary" link="/customers">Cancel</app-button>
         </div>
       </form>
     </div>
@@ -45,10 +44,12 @@ import { CustomerStore } from '../customer-store';
     .wrap { max-width: 640px; margin: 0 auto; padding: var(--sp-section) var(--sp-xl); }
     h1 { font-size: 40px; letter-spacing: -0.5px; margin-bottom: var(--sp-xl); }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-lg); }
+    .full { grid-column: 1 / -1; }
     .group { display: flex; flex-direction: column; gap: var(--sp-xs); }
-    .group:has(select), .group:nth-last-child(1) { grid-column: 1 / -1; }
     .label { font-size: 14px; font-weight: 500; }
-    .err { color: var(--sale); font-size: 12px; }
+    .field { background: var(--soft-cloud); border: 2px solid transparent; border-radius: var(--r-md);
+      height: 48px; padding: 0 16px; font: inherit; width: 100%; color: var(--ink); }
+    .field:focus { outline: none; background: var(--canvas); border-color: var(--ink); }
     .server-err { color: var(--sale); margin-top: var(--sp-lg); font-weight: 500; }
     .actions { display: flex; gap: var(--sp-md); margin-top: var(--sp-xl); }
     @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
@@ -60,13 +61,6 @@ export class CustomerForm {
   private readonly router = inject(Router);
   readonly editId = inject(ActivatedRoute).snapshot.paramMap.get('id');
   readonly serverError = signal('');
-
-  readonly textFields = [
-    { key: 'firstName', label: 'First name', type: 'text' },
-    { key: 'lastName', label: 'Last name', type: 'text' },
-    { key: 'email', label: 'Email', type: 'email' },
-    { key: 'phone', label: 'Phone', type: 'tel' },
-  ] as const;
 
   readonly form = this.fb.nonNullable.group({
     firstName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -84,18 +78,9 @@ export class CustomerForm {
     }
   }
 
-  invalid(key: string) {
-    const c = this.form.get(key)!;
-    return c.invalid && (c.touched || c.dirty);
-  }
-
-  errorFor(key: string) {
-    const errs = this.form.get(key)!.errors ?? {};
-    if (errs['required']) return 'Required.';
-    if (errs['email']) return 'Invalid email.';
-    if (errs['pattern']) return 'Invalid phone number.';
-    if (errs['maxlength']) return 'Too long.';
-    return 'Invalid.';
+  /** Typed accessor so the template can hand a FormControl to <app-text-field>. */
+  ctrl(name: 'firstName' | 'lastName' | 'email' | 'phone') {
+    return this.form.controls[name] as FormControl<string>;
   }
 
   async submit() {
